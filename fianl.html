@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div class="container">
+    <div class="cube">
+      <div class="face front"></div>
+      <div class="face back"></div>
+      <div class="face left"></div>
+      <div class="face right"></div>
+      <div class="face top"></div>
+      <div class="face bottom"></div>
+      <div class="crack"></div>
+    </div>
+  </div>
+  
+  <script>
+    // Get the cube element and create a crack element
+    const cube = document.querySelector('.cube');
+    const crack = cube.querySelector('.crack');
+  
+    // Define the distance threshold for the crack
+    const distanceThreshold = 100;
+  
+    // Define a function to update the crack based on the distance
+    function updateCrack(distance) {
+      if (distance <= distanceThreshold) {
+        crack.style.display = 'block';
+      } else {
+        crack.style.display = 'block';
+      }
+    }
+  
+    // Example function to get distance from an ultrasonic sensor
+    function getDistance() {
+      // Replace this with your own code to read sensor data
+      return Math.floor(Math.random() * 200);
+    }
+  
+    // Continuously update the crack based on sensor data
+    setInterval(() => {
+      const distance = getDistance();
+      updateCrack(distance);
+    }, 1000);
+  
+    // Rotate the cube on mouse drag
+    let isDragging = false;
+    let previousMousePosition = {
+      x: 0,
+      y: 0,
+    };
+  
+    cube.addEventListener('mousedown', (event) => {
+      isDragging = true;
+      previousMousePosition = {
+        x: event.clientX,
+        y: event.clientY,
+      };
+    });
+  
+    cube.addEventListener('mouseup', () => {
+      isDragging = false;
+    });
+  
+    cube.addEventListener('mousemove', (event) => {
+      if (isDragging) {
+        const delta = {
+          x: event.clientX - previousMousePosition.x,
+          y: event.clientY - previousMousePosition.y,
+        };
+  
+        cube.style.transform += `rotateX(${delta.y}deg) rotateY(${delta.x}deg)`;
+        previousMousePosition = {
+          x: event.clientX,
+          y: event.clientY,
+        };
+      }
+    });
+  </script>
+  
+  <style>
+    .container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+  
+    .cube {
+  position: relative;
+  width: 300px; /* Adjust width to desired size */
+  height: 100px; /* Adjust height to desired size */
+  
+  transform-style: preserve-3d;
+}
+
+  
+    .face {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border: 2px solid black;
+      box-sizing: border-box;
+    }
+  
+    .back {
+      transform: translateZ(-100px) rotateY(180deg);
+    }
+  
+    .left {
+      transform: translateX(-100px) rotateY(-90deg);
+    }
+  
+    .right {
+      transform: translateX(100px) rotateY(90deg);
+    }
+
+   
+  
+    .crack {
+      position: absolute;
+      width: 75px;
+      height: 5px;
+      top: 10px;
+      left: 19%;
+      transform: translateX(-50%);
+      background-color: red;
+    }
+  </style>
+</body>
+</html>
