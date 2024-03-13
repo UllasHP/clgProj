@@ -1,0 +1,71 @@
+#define trigPin1 5
+#define echoPin1 4
+#define trigPin2 8
+#define echoPin2 9
+
+float distance1_previous = 0;
+float distance2_previous = 0;
+
+void setup() {
+  Serial.begin(9600);
+  pinMode(trigPin1, OUTPUT);
+  pinMode(echoPin1, INPUT);
+  pinMode(trigPin2, OUTPUT);
+  pinMode(echoPin2, INPUT);
+}
+
+void loop() {
+  // Measure distance from Sensor 1
+  digitalWrite(trigPin1, LOW);
+  delayMicroseconds(2);
+  digitalWrite(trigPin1, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(trigPin1, LOW);
+  long duration1 = pulseIn(echoPin1, HIGH);
+  float distance1 = duration1 * 0.034 / 2;
+  
+  // Measure distance from Sensor 2
+  digitalWrite(trigPin2, LOW);
+  delayMicroseconds(2);
+  digitalWrite(trigPin2, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(trigPin2, LOW);
+  long duration2 = pulseIn(echoPin2, HIGH);
+  float distance2 = duration2 * 0.034 / 2;
+  
+  // Check for crack detection
+  if ((distance1_previous - distance1 > 2) && (distance1 < 50)) {
+    Serial.print("Crack detected at distance: ");
+    Serial.print(distance1);
+    Serial.println(" cm from Sensor 1");
+  }
+  
+  if ((distance2_previous - distance2 > 5) && (distance2 < 50)) {
+    Serial.print("Crack detected at distance: ");
+    Serial.print(distance2);
+    Serial.println(" cm from Sensor 2");
+  }
+  
+  // Update previous distances for the next iteration
+  distance1_previous = distance1;
+  distance2_previous = distance2;
+
+  // Check for out of range measurements
+  if (distance1 >= 13 || distance1 <= 0) {
+    Serial.println("Sensor 1 out of range");
+  } else {
+    Serial.print("Distance Sensor 1: ");
+    Serial.print(distance1);
+    Serial.println(" cm");
+  }
+  
+  if (distance2 >= 13    || distance2 <= 0) {
+    Serial.println("Sensor 2 out of range");
+  } else {
+    Serial.print("Distance Sensor 2: ");
+    Serial.print(distance2);
+    Serial.println(" cm");
+  }
+  
+delay(500);
+}

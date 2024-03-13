@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>8th sem</title>
+</head>
+<body>
+    <div class="container">
+        <div class="beam">
+            <div class="face front"></div>
+            <div class="face back"></div>
+            <div class="face left"></div>
+            <div class="face right"></div>
+            <div class="face top"></div>
+            <div class="face bottom"></div>
+            <div class="crack"></div>
+        </div>
+    </div>
+    
+    <style>
+        .container {
+            perspective: 800px;
+            perspective-origin: 50% 50%;
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+    
+        .beam {
+            position: relative;
+            width: 50px; /* Width of the beam */
+            height: 200px; /* Height of the beam */
+            transform-style: preserve-3d;
+            transition: transform 0.3s ease-in-out;
+            background-color: 	#ffffff; /* Beam color */
+        }
+    
+        .face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            box-sizing: border-box;
+        }
+    
+        .front {
+            background-color: 	#7E8274; /* Same color as the beam */
+        }
+    
+        .back {
+            display: none; /* Hide the back face */
+        }
+    
+        .left {
+            background-color: 	#7E8274; /* Same color as the beam */
+            transform: rotateY(-90deg) translateX(50%);
+        }
+    
+        .right {
+            background-color: 	#7E8274; /* Same color as the beam */
+            transform: rotateY(90deg) translateX(-50%);
+        }
+    
+        .top {
+            background-color: 	#7E8274; /* Same color as the beam */
+            transform: translateY(-50%) rotateX(90deg);
+        }
+    
+        .bottom {
+            background-color: 	#7E8274; /* Same color as the beam */
+            transform: translateY(50%) rotateX(-90deg);
+        }
+    
+        .crack {
+            position: absolute;
+            width: 4px;
+            height: 100px;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: red;
+        }
+    </style>
+    
+    <script>
+        const beam = document.querySelector('.beam');
+        let isDragging = false;
+        let previousMousePosition = {
+            x: 0,
+            y: 0,
+        };
+    
+        beam.addEventListener('mousedown', (event) => {
+            isDragging = true;
+            previousMousePosition = {
+                x: event.clientX,
+                y: event.clientY,
+            };
+        });
+    
+        document.addEventListener('mouseup', () => {
+            isDragging = false;
+        });
+    
+        document.addEventListener('mousemove', (event) => {
+            if (isDragging) {
+                const delta = {
+                    x: event.clientX - previousMousePosition.x,
+                    y: event.clientY - previousMousePosition.y,
+                };
+    
+                const rotationX = delta.y;
+                const rotationY = delta.x;
+    
+                beam.style.transform += `rotateX(${rotationX}deg) rotateY(${rotationY}deg)`;
+                previousMousePosition = {
+                    x: event.clientX,
+                    y: event.clientY,
+                };
+            }
+        });
+    </script>
+    
+</body>
+</html>

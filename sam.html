@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rectangular Cube</title>
+<style>
+  .container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+
+  .cube {
+    position: relative;
+    width: 300px; /* Adjust the width to your desired rectangle width */
+    height: 200px; /* Adjust the height to your desired rectangle height */
+    transform-style: preserve-3d;
+  }
+
+  .face {
+    position: absolute;
+    width: 100%; /* Set width to 100% */
+    height: 100%; /* Set height to 100% */
+    border: 2px solid black;
+    box-sizing: border-box;
+  }
+
+  .front {
+    transform: translateZ(100px);
+  }
+
+  .back {
+    transform: translateZ(-100px) rotateY(180deg);
+  }
+
+  .left {
+    transform: translateX(-50%) rotateY(-90deg); /* Adjust translation */
+  }
+
+  .right {
+    transform: translateX(50%) rotateY(90deg); /* Adjust translation */
+  }
+
+  .top {
+    transform: translateY(-50%) rotateX(90deg); /* Adjust translation */
+  }
+
+  .bottom {
+    transform: translateY(50%) rotateX(-90deg); /* Adjust translation */
+  }
+
+  .crack {
+    position: absolute;
+    width: 4px;
+    height: 100px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: red;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="cube">
+    <div class="face front"></div>
+    <div class="face back"></div>
+    <div class="face left"></div>
+    <div class="face right"></div>
+    <div class="face top"></div>
+    <div class="face bottom"></div>
+    <div class="crack"></div>
+  </div>
+</div>
+</body>
+</html>
